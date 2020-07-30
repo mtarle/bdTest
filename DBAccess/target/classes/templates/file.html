@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>StudCloud - главная</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div>
+    <h1>Файл</h1>
+    <div>
+        <a th:text="${file.get().getUniversity().getName()}"></a>
+        <a th:text="${file.get().getDepartment().getName()}"></a>
+        <a th:text="${file.get().getTeacher().getName()}"></a>
+        <a th:text="${file.get().getSubj().getName()}"></a>
+        <a th:href="'/files/' + ${file.get().getId()} + '/download/'" th:text="${file.get().getName()}"></a>
+    </div>
+    <div class="alert alert-info mt-2">
+    <h4>
+        Обсуждение
+    </h4>
+        <a>
+            Новый комментарий
+        </a>
+    <form method="post">
+        <input type="text" name="name" placeholder="Имя пользователя" class="form-control"><br>
+        <input type="text" name="message" placeholder="Сообщение" class="form-control" required><br>
+        <button type="submit" class="btn btn-success">Отправить</button>
+    </form>
+    <div th:each="message : ${file.get().getComments()}" class="alert alert-info mt-2">
+        <a th:text="'Дата: ' + ${message.getDate()}"/>
+        <br>
+        <a th:text="'Пользователь: ' + ${message.getUserName()}"/>
+        <br>
+        <a th:text="'Сообщение: ' + ${message.getMessage()}"/>
+    </div>
+    </div>
+</div>
+
+<footer th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>
